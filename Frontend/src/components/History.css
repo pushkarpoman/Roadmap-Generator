@@ -1,0 +1,146 @@
+.history-container {
+  min-height: calc(100vh - 64px);
+  padding: 32px 0;
+}
+
+.history-paper {
+  padding: 28px;
+  margin: 24px 0;
+  border-radius: 16px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  box-shadow: 0 10px 30px rgba(2,6,23,0.2);
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.history-title {
+  font-weight: 800;
+  color: var(--accent-1);
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.roadmap-card {
+  border-radius: 12px;
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+  box-shadow: 0 6px 18px rgba(2,6,23,0.08);
+  overflow: hidden;
+}
+
+.roadmap-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(2,6,23,0.12);
+}
+
+.roadmap-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.roadmap-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.icon-accent {
+  color: var(--accent-1);
+}
+
+.title-text {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.created-text {
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.calendar-icon {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+.history-divider {
+  margin: 12px 0 16px 0;
+  border-color: rgba(0,0,0,0.06);
+}
+
+.sections {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.history-accordion {
+  box-shadow: none;
+  border-radius: 8px;
+}
+
+.accordion-summary {
+  background: transparent;
+  padding: 8px 12px;
+  color: var(--text-primary);
+}
+
+.accordion-title {
+  font-weight: 600;
+  color: var(--accent-1);
+}
+
+.list-primary {
+  font-size: 0.98rem;
+  color: var(--text-primary);
+}
+
+.item-secondary {
+  margin-top: 6px;
+  color: var(--text-muted);
+}
+
+.item-duration {
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.item-desc {
+  margin-bottom: 8px;
+  color: var(--text-muted);
+}
+
+.item-meta {
+  margin-top: 6px;
+  font-size: 0.9rem;
+  color: var(--accent-1);
+}
+
+.raw-content {
+  white-space: pre-wrap;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', monospace;
+  color: var(--text-primary);
+}
+
+/* Accordion summary background tweak per theme for better contrast */
+:root {
+  --accordion-summary-bg-dark: rgba(255,255,255,0.02);
+  --accordion-summary-bg-light: rgba(0,0,0,0.03);
+}
+.accordion-summary { background: var(--accordion-summary-bg-dark); }
+
+/* Light theme override */
+[data-theme='light'] .accordion-summary { background: var(--accordion-summary-bg-light); }

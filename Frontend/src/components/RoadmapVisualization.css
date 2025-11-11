@@ -1,0 +1,234 @@
+/* .roadmap-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 3rem auto;
+  padding: 2rem;
+}
+
+.roadmap-title {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 3rem;
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.roadmap-path {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  position: relative;
+}
+
+.stage-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+}
+
+.stage-node {
+  position: relative;
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  border: 2px solid #334155;
+  border-radius: 20px;
+  padding: 2rem;
+  width: 100%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.stage-node:hover {
+  transform: translateY(-5px);
+  border-color: #3b82f6;
+  box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+}
+
+.stage-node.active {
+  border-color: #8b5cf6;
+  background: linear-gradient(135deg, #1e293b 0%, #1e1b4b 100%);
+}
+
+.stage-number {
+  position: absolute;
+  top: -15px;
+  left: 20px;
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.2rem;
+  box-shadow: 0 4px 8px rgba(59, 130, 246, 0.4);
+}
+
+.stage-name {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #f1f5f9;
+  margin-bottom: 0.5rem;
+}
+
+.stage-duration {
+  font-size: 0.9rem;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.stage-connector {
+  width: 100%;
+  max-width: 400px;
+  margin: 0.5rem 0;
+}
+
+.stage-details {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: 1rem;
+  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+  border: 2px solid #8b5cf6;
+  border-radius: 16px;
+  padding: 1.5rem;
+  z-index: 100;
+  box-shadow: 0 20px 40px rgba(139, 92, 246, 0.3);
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.details-content h3 {
+  color: #f1f5f9;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.description {
+  color: #cbd5e1;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.skills-section,
+.resources-section {
+  margin-top: 1.5rem;
+}
+
+.skills-section h4,
+.resources-section h4 {
+  color: #3b82f6;
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+}
+
+.skills-section ul,
+.resources-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.skills-section li,
+.resources-section li {
+  color: #cbd5e1;
+  padding: 0.5rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+  line-height: 1.5;
+}
+
+.skills-section li:before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #3b82f6;
+  font-weight: 700;
+}
+
+.resources-section li:before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: #8b5cf6;
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .roadmap-container {
+    padding: 1rem;
+  }
+
+  .roadmap-title {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .stage-node {
+    padding: 1.5rem;
+  }
+
+  .stage-name {
+    font-size: 1.2rem;
+  }
+
+  .stage-number {
+    width: 35px;
+    height: 35px;
+    font-size: 1rem;
+  }
+
+  .stage-details {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 500px;
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .roadmap-title {
+    font-size: 1.5rem;
+  }
+
+  .stage-node {
+    padding: 1rem;
+  }
+
+  .stage-name {
+    font-size: 1rem;
+  }
+
+  .stage-duration {
+    font-size: 0.8rem;
+  }
+
+  .details-content h3 {
+    font-size: 1.1rem;
+  }
+} */
