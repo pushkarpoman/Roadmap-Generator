@@ -79,14 +79,14 @@ export default function RoadmapVisualization({ roadmap }: Props) {
                   style={{
                     position: "relative",
                     background: isOpen
-                      ? "linear-gradient(135deg, #1e293b 0%, #1e1b4b 100%)"
-                      : "linear-gradient(135deg, #1e293b 0%, #0f172a 100%)",
-                    border: `2px solid ${isOpen ? "#8b5cf6" : "#334155"}`,
+                      ? "var(--roadmap-card-active-bg)"
+                      : "var(--roadmap-card-bg)",
+                    border: `2px solid ${isOpen ? "var(--accent-2)" : "var(--card-border)"}`,
                     borderRadius: "20px",
                     padding: "2rem",
                     cursor: "pointer",
                     transition: "all 0.3s ease",
-                    boxShadow: isOpen ? "0 10px 30px rgba(139, 92, 246, 0.4)" : "0 4px 6px rgba(0, 0, 0, 0.1)",
+                    boxShadow: isOpen ? "var(--shadow-strong)" : "var(--shadow-soft)",
                     transform: isOpen ? "translateY(-5px)" : "translateY(0)",
                   }}
                 >
@@ -114,7 +114,7 @@ export default function RoadmapVisualization({ roadmap }: Props) {
                   <div style={{ fontSize: "1.5rem", fontWeight: "600", color: "#f1f5f9", marginBottom: "0.5rem" }}>
                     {stage.name}
                   </div>
-                  <div style={{ fontSize: "0.9rem", color: "#94a3b8", fontWeight: "500" }}>{stage.duration}</div>
+                  <div style={{ fontSize: "0.9rem", color: "var(--text-muted)", fontWeight: "500" }}>{stage.duration}</div>
                 </div>
               </div>
 
@@ -128,7 +128,7 @@ export default function RoadmapVisualization({ roadmap }: Props) {
                   height: "16px",
                   borderRadius: "50%",
                   background: isOpen ? "#8b5cf6" : "#64748b",
-                  border: "3px solid #0f172a",
+                  border: "3px solid var(--timeline-node-border)",
                   transition: "all 0.3s ease",
                   zIndex: "2",
                   boxShadow: isOpen ? "0 0 20px rgba(139, 92, 246, 0.8)" : "none",
@@ -172,15 +172,15 @@ export default function RoadmapVisualization({ roadmap }: Props) {
         >
           <div
             style={{
-              background: "linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%)",
-              border: "2px solid #8b5cf6",
+              background: "var(--roadmap-modal-bg)",
+              border: "2px solid var(--accent-2)",
               borderRadius: "20px",
               padding: "2.5rem",
               maxWidth: "600px",
               width: "90%",
               maxHeight: "80vh",
               overflowY: "auto",
-              boxShadow: "0 25px 50px rgba(139, 92, 246, 0.5)",
+              boxShadow: "var(--shadow-strong)",
               position: "relative",
             }}
             onClick={(event) => event.stopPropagation()}
@@ -193,7 +193,7 @@ export default function RoadmapVisualization({ roadmap }: Props) {
                 right: "1rem",
                 background: "none",
                 border: "none",
-                color: "#cbd5e1",
+                color: "var(--text-muted)",
                 fontSize: "2rem",
                 cursor: "pointer",
                 width: "30px",
@@ -213,7 +213,7 @@ export default function RoadmapVisualization({ roadmap }: Props) {
               {roadmap.stages[openStage].name}
             </h3>
 
-            <p style={{ color: "#cbd5e1", lineHeight: "1.7", marginBottom: "2rem", fontSize: "1rem", textAlign: "center" }}>
+            <p style={{ color: "var(--text-muted)", lineHeight: "1.7", marginBottom: "2rem", fontSize: "1rem", textAlign: "center" }}>
               {roadmap.stages[openStage].description}
             </p>
 
@@ -235,12 +235,12 @@ export default function RoadmapVisualization({ roadmap }: Props) {
                   <li
                     key={skill}
                     style={{
-                      color: "#cbd5e1",
+                      color: "var(--text-primary)",
                       padding: "0.75rem 1rem",
-                      background: "rgba(59, 130, 246, 0.1)",
+                      background: "var(--roadmap-chip-bg)",
                       borderRadius: "8px",
                       textAlign: "center",
-                      border: "1px solid rgba(59, 130, 246, 0.2)",
+                      border: "1px solid var(--roadmap-chip-border)",
                       lineHeight: "1.4",
                       fontSize: "0.95rem",
                     }}
@@ -261,12 +261,12 @@ export default function RoadmapVisualization({ roadmap }: Props) {
                     <li
                       key={resource}
                       style={{
-                        color: "#cbd5e1",
+                        color: "var(--text-primary)",
                         padding: "1rem",
                         marginBottom: "0.5rem",
-                        background: "rgba(139, 92, 246, 0.1)",
+                        background: "var(--roadmap-chip-bg)",
                         borderRadius: "8px",
-                        borderLeft: "3px solid #8b5cf6",
+                        borderLeft: "3px solid var(--accent-2)",
                         lineHeight: "1.5",
                         fontSize: "0.95rem",
                       }}

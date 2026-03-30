@@ -136,26 +136,33 @@ export default function HistoryContent() {
                                       }
                                       secondary={
                                         typedItem.description ? (
-                                          <Box className="item-secondary">
-                                            {typedItem.duration && <div className="item-duration">Duration: {typedItem.duration}</div>}
-                                            <div className="item-desc">{typedItem.description}</div>
+                                          <Box component="span" className="item-secondary" sx={{ display: "block" }}>
+                                            {typedItem.duration && (
+                                              <Box component="span" className="item-duration" sx={{ display: "block" }}>
+                                                Duration: {typedItem.duration}
+                                              </Box>
+                                            )}
+                                            <Box component="span" className="item-desc" sx={{ display: "block" }}>
+                                              {typedItem.description}
+                                            </Box>
                                             {typedItem.skills && (
-                                              <div className="item-meta">
+                                              <Box component="span" className="item-meta" sx={{ display: "block" }}>
                                                 <strong>Skills:</strong>{" "}
                                                 {Array.isArray(typedItem.skills) ? typedItem.skills.join(", ") : typedItem.skills}
-                                              </div>
+                                              </Box>
                                             )}
                                             {typedItem.resources && (
-                                              <div className="item-meta">
+                                              <Box component="span" className="item-meta" sx={{ display: "block" }}>
                                                 <strong>Resources:</strong>{" "}
                                                 {Array.isArray(typedItem.resources)
                                                   ? typedItem.resources.join(", ")
                                                   : typedItem.resources}
-                                              </div>
+                                              </Box>
                                             )}
                                           </Box>
                                         ) : null
                                       }
+                                      secondaryTypographyProps={{ component: "span" }}
                                       classes={{ primary: "list-primary" }}
                                     />
                                   </ListItem>
