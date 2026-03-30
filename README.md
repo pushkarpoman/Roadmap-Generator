@@ -1,166 +1,87 @@
-# Roadmap-Generator
+# Roadmap Generator (Next.js + TypeScript + Neon)
 
-A full-stack web application built with MongoDB, Express.js, React, and Node.js.
+A full-stack roadmap generator built as a single Next.js application using TypeScript, NeonDB (PostgreSQL), JWT auth, and Gemini for AI roadmap generation.
 
-## Features
+## What Changed
 
-- User authentication and authorization
-- RESTful API architecture
-- Responsive user interface
-- CRUD operations
-- Real-time data updates
-- Secure backend with JWT tokens
+This repository has been migrated from a split MongoDB/Express + Vite React architecture to a unified Next.js app.
+
+- Frontend: Next.js App Router + TypeScript + MUI
+- Backend: Next.js API routes
+- Database: NeonDB (PostgreSQL JSONB) replacing MongoDB
+- Auth: JWT with secure HTTP-only cookie
+- AI generation: Gemini API called from server-side route
 
 ## Tech Stack
 
-**Frontend:**
-- React.js - UI library
-- React Router - Navigation
-- Axios - HTTP client
-- CSS3/Styled Components - Styling
-
-**Backend:**
-- Node.js - Runtime environment
-- Express.js - Web framework
-- MongoDB - Database
-- Mongoose - ODM
-- JWT - Authentication
-- bcrypt - Password hashing
+- Next.js 15
+- TypeScript
+- Neon serverless driver (`@neondatabase/serverless`)
+- PostgreSQL (Neon)
+- MUI
+- `jsonwebtoken` + `bcryptjs`
 
 ## Prerequisites
 
-Before running this project, make sure you have:
-- Node.js (v14 or higher)
-- npm or yarn
-- MongoDB (local or Atlas account)
+- Node.js 20+
+- npm
+- A Neon PostgreSQL connection string
+- Gemini API key
 
-## Installation
+## Environment Variables
 
-1. Clone the repository:
-```bash
-git clone https://github.com/yourusername/your-repo-name.git
-cd your-repo-name
-```
+Create a root `.env.local` file:
 
-2. Install backend dependencies:
-```bash
-cd backend
-npm install
-```
-
-3. Install frontend dependencies:
-```bash
-cd ../client
-npm install
-```
-
-4. Create a `.env` file in the server directory:
 ```env
-PORT=5000
-MONGODB_URI=your_mongodb_connection_string
-JWT_SECRET=your_jwt_secret_key
-NODE_ENV=development
+DATABASE_URL=postgresql://USER:PASSWORD@HOST/DB?sslmode=require
+JWT_SECRET=replace_with_a_strong_secret
+GEMINI_API_KEY=your_gemini_api_key
 ```
 
-5. Create a `.env` file in the client directory (if needed):
-```env
-REACT_APP_API_URL=http://localhost:5000/api
-```
+## Local Development
 
-## Running the Application
-
-**Development mode:**
-
-1. Start the backend server:
 ```bash
-cd backend
+npm install
 npm run dev
 ```
 
-2. In a new terminal, start the frontend:
-```bash
-cd client
-npm start
-```
+Open `http://localhost:3000`.
 
-The application will open at `http://localhost:3000` and the API will run on `http://localhost:5000`.
+## Production
 
-**Production build:**
 ```bash
-cd frontend
 npm run build
-cd ../backeknd
 npm start
-```
-
-## Project Structure
-
-```
-project-root/
-├── frontend/                # React frontend
-│   ├── public/
-│   ├── src/
-│   │   ├── components/
-│   │   ├── pages/
-│   │   ├── services/
-│   │   ├── utils/
-│   │   ├── App.js
-│   │   └── index.js
-│   └── package.json
-├── backend/                # Express backend
-│   ├── config/
-│   ├── controllers/
-│   ├── models/
-│   ├── routes/
-│   ├── middleware/
-│   ├── server.js
-│   └── package.json
-└── README.md
 ```
 
 ## API Endpoints
 
-### Authentication
-- `POST /api/auth/register` - Register new user
-- `POST /api/auth/login` - Login user
+### Auth
 
-### Users
-- `GET /api/users` - Get all users
-- `GET /api/users/:id` - Get user by ID
-- `PUT /api/users/:id` - Update user
-- `DELETE /api/users/:id` - Delete user
+- `POST /api/auth/register`
+- `POST /api/auth/login`
+- `POST /api/auth/logout`
+- `GET /api/auth/me`
 
-## Environment Variables
+### Roadmaps
 
-**Backend (.env):**
-- `PORT` - Server port number
-- `MONGODB_URI` - MongoDB connection string
-- `JWT_SECRET` - Secret key for JWT tokens
-- `NODE_ENV` - Environment (development/production)
+- `POST /api/roadmap/generate`
+- `POST /api/roadmap`
+- `GET /api/roadmap/history`
+- `GET /api/roadmap/:id`
 
-**Frontend (.env):**
-- `REACT_APP_API_URL` - Backend API URL
+## Data Model (PostgreSQL)
 
-## Contributing
+- `users`: `id`, `name`, `email`, `password_hash`, `created_at`
+- `roadmaps`: `id`, `user_id`, `title`, `content(JSONB)`, `created_at`
 
-1. Fork the project
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+Tables are created automatically at runtime on first request.
 
-## License
+## Migration Notes
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+Legacy folders are still present:
 
-## Contact
+- `Backend/`
+- `Frontend/`
 
- Name - @pushkarpoman
-
-
-## Acknowledgments
-
-- MongoDB Documentation
-- Express.js Guide
-- React Documentation
-- Node.js Best Practices
+They are no longer required for running the migrated app.
