@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getRequestUser } from "@/lib/auth";
-import { ensureSchema, sql } from "@/lib/db";
+import { findRoadmapByIdForUser } from "@/lib/db";
 
 export async function GET(
   _request: Request,
@@ -13,20 +13,15 @@ export async function GET(
     }
 
     const { id } = await params;
-    await ensureSchema();
+    const roadmap = await findRoadmapByIdForUser({
+      id: Number(id),
+      userId: user.id,
+    });
 
-    const rows = await sql`
-      SELECT id, title, content, created_at
-      FROM roadmaps
-      WHERE id = ${Number(id)} AND user_id = ${user.id}
-      LIMIT 1;
-    `;
-
-    if (!rows.length) {
+    if (!roadmap) {
       return NextResponse.json({ message: "Roadmap not found" }, { status: 404 });
     }
 
-    const roadmap = rows[0];
     return NextResponse.json({
       id: roadmap.id,
       title: roadmap.title,

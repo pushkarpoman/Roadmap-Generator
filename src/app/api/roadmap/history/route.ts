@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getRequestUser } from "@/lib/auth";
-import { ensureSchema, sql } from "@/lib/db";
+import { listRoadmapsByUserId } from "@/lib/db";
 
 export async function GET() {
   try {
@@ -9,15 +9,7 @@ export async function GET() {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
-    await ensureSchema();
-    const rows = await sql`
-      SELECT id, title, content, created_at
-      FROM roadmaps
-      WHERE user_id = ${user.id}
-      ORDER BY created_at DESC;
-    `;
-
-    const roadmaps = rows.map((row) => ({
+    const roadmaps = (await listRoadmapsByUserId(user.id)).map((row) => ({
       id: row.id,
       title: row.title,
       content: row.content,

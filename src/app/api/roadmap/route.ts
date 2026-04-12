@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getRequestUser } from "@/lib/auth";
-import { ensureSchema, sql } from "@/lib/db";
+import { createRoadmap } from "@/lib/db";
+import type { RoadmapContent } from "@/types/roadmap";
 
 export async function POST(request: Request) {
   try {
@@ -16,14 +17,11 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: "title and content are required" }, { status: 400 });
     }
 
-    await ensureSchema();
-    const inserted = await sql`
-      INSERT INTO roadmaps (user_id, title, content)
-      VALUES (${user.id}, ${title.trim()}, ${JSON.stringify(content)}::jsonb)
-      RETURNING id, title, content, created_at;
-    `;
-
-    const roadmap = inserted[0];
+    const roadmap = await createRoadmap({
+      userId: user.id,
+      title,
+      content: content as RoadmapContent,
+    });
     return NextResponse.json(
       {
         id: roadmap.id,

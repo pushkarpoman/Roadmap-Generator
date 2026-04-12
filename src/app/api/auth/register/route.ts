@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
-import { ensureSchema, sql } from "@/lib/db";
+import { createUser, findUserByEmail } from "@/lib/db";
 import { setAuthCookie, signToken } from "@/lib/auth";
 
 export async function POST(request: Request) {
@@ -16,21 +16,17 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: "Password must be at least 6 characters" }, { status: 400 });
     }
 
-    await ensureSchema();
-
-    const existing = await sql`SELECT id FROM users WHERE email = ${email.toLowerCase()} LIMIT 1;`;
-    if (existing.length) {
+    const existing = await findUserByEmail(email);
+    if (existing) {
       return NextResponse.json({ message: "User already exists" }, { status: 400 });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const inserted = await sql`
-      INSERT INTO users (name, email, password_hash)
-      VALUES (${name.trim()}, ${email.toLowerCase()}, ${hashedPassword})
-      RETURNING id, name, email;
-    `;
-
-    const user = inserted[0];
+    const user = await createUser({
+      name,
+      email,
+      passwordHash: hashedPassword,
+    });
     const token = signToken({ id: user.id, email: user.email });
     await setAuthCookie(token);
 

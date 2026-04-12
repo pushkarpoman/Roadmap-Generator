@@ -17,9 +17,11 @@ export default function HomeContent() {
   const [inputError, setInputError] = useState("");
 
   useEffect(() => {
-    const last = localStorage.getItem("lastRole");
-    if (last && inputRef.current) {
-      inputRef.current.value = last;
+    if (typeof window !== 'undefined') {
+      const last = localStorage.getItem("lastRole");
+      if (last && inputRef.current) {
+        inputRef.current.value = last;
+      }
     }
   }, []);
 
@@ -45,7 +47,9 @@ export default function HomeContent() {
         await saveRoadmap(role, generatedRoadmap);
       }
 
-      localStorage.setItem("lastRole", role);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem("lastRole", role);
+      }
     } catch (err) {
       const message = err instanceof Error ? err.message : "Failed to generate roadmap";
       setError(message);

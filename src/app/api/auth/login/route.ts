@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
-import { ensureSchema, sql } from "@/lib/db";
+import { findUserByEmail } from "@/lib/db";
 import { setAuthCookie, signToken } from "@/lib/auth";
 
 export async function POST(request: Request) {
@@ -12,19 +12,11 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: "All fields are required" }, { status: 400 });
     }
 
-    await ensureSchema();
-    const rows = await sql`
-      SELECT id, name, email, password_hash
-      FROM users
-      WHERE email = ${email.toLowerCase()}
-      LIMIT 1;
-    `;
-
-    if (!rows.length) {
+    const user = await findUserByEmail(email);
+    if (!user) {
       return NextResponse.json({ message: "Invalid credentials" }, { status: 400 });
     }
 
-    const user = rows[0];
     const validPassword = await bcrypt.compare(password, user.password_hash);
     if (!validPassword) {
       return NextResponse.json({ message: "Invalid credentials" }, { status: 400 });

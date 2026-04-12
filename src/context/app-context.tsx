@@ -32,14 +32,18 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [theme, setThemeState] = useState<"dark" | "light">("dark");
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme === "light" || savedTheme === "dark") {
-      setThemeState(savedTheme);
-      document.documentElement.setAttribute("data-theme", savedTheme);
-      return;
+    if (typeof window !== 'undefined') {
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme === "light" || savedTheme === "dark") {
+        setThemeState(savedTheme);
+        document.documentElement.setAttribute("data-theme", savedTheme);
+        return;
+      }
     }
 
-    document.documentElement.setAttribute("data-theme", "dark");
+    if (typeof window !== 'undefined') {
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
   }, []);
 
   const refreshUser = useCallback(async () => {
@@ -57,8 +61,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   const setTheme = useCallback((nextTheme: "dark" | "light") => {
     setThemeState(nextTheme);
-    localStorage.setItem("theme", nextTheme);
-    document.documentElement.setAttribute("data-theme", nextTheme);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem("theme", nextTheme);
+      document.documentElement.setAttribute("data-theme", nextTheme);
+    }
   }, []);
 
   const toggleTheme = useCallback(() => {
