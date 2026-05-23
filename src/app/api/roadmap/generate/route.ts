@@ -23,6 +23,64 @@ Return ONLY valid JSON in this exact format:
 Include 6-8 progressive stages from beginner to advanced. Keep each stage practical and actionable.`;
 }
 
+function buildFallbackRoadmap(role: string): RoadmapContent {
+  const normalizedRole = role.trim() || "Career";
+
+  return {
+    title: `${normalizedRole} Roadmap`,
+    stages: [
+      {
+        id: 1,
+        name: "Fundamentals",
+        duration: "1-2 weeks",
+        description: `Learn the core concepts and terminology for ${normalizedRole.toLowerCase()}.`,
+        skills: ["Core concepts", "Problem solving", "Tool basics"],
+        resources: ["Official docs", "Beginner tutorials"],
+      },
+      {
+        id: 2,
+        name: "Core Practice",
+        duration: "2-4 weeks",
+        description: `Practice the day-to-day workflows used by ${normalizedRole.toLowerCase()}s.`,
+        skills: ["Hands-on practice", "Workflow understanding", "Debugging"],
+        resources: ["Sample projects", "Practice exercises"],
+      },
+      {
+        id: 3,
+        name: "Build Small Projects",
+        duration: "3-5 weeks",
+        description: "Apply what you have learned by building small, focused projects.",
+        skills: ["Project planning", "Implementation", "Version control"],
+        resources: ["Project ideas", "GitHub templates"],
+      },
+      {
+        id: 4,
+        name: "Intermediate Skills",
+        duration: "4-6 weeks",
+        description: "Deepen your understanding with more advanced patterns and best practices.",
+        skills: ["Architecture", "Performance", "Testing"],
+        resources: ["Advanced guides", "Case studies"],
+      },
+      {
+        id: 5,
+        name: "Portfolio Ready",
+        duration: "2-4 weeks",
+        description: "Polish your work into portfolio-ready projects that show your strengths.",
+        skills: ["Communication", "Documentation", "Presentation"],
+        resources: ["Portfolio examples", "README templates"],
+      },
+      {
+        id: 6,
+        name: "Job Preparation",
+        duration: "Ongoing",
+        description: "Prepare for interviews and continue learning through real-world feedback.",
+        skills: ["Interview prep", "System thinking", "Continuous learning"],
+        resources: ["Mock interviews", "Roadmap reviews"],
+      },
+    ],
+  };
+}
+
 function normalizeRoadmap(raw: unknown, role: string): RoadmapContent {
   const data = raw as Partial<RoadmapContent>;
   const title = typeof data.title === "string" && data.title.trim() ? data.title : `${role} Roadmap`;
@@ -57,7 +115,7 @@ export async function POST(request: Request) {
     }
 
     if (!process.env.GEMINI_API_KEY) {
-      return NextResponse.json({ message: "GEMINI_API_KEY is not configured" }, { status: 500 });
+      return NextResponse.json(buildFallbackRoadmap(role));
     }
 
     const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${process.env.GEMINI_API_KEY}`;
@@ -77,7 +135,7 @@ export async function POST(request: Request) {
     if (!geminiResponse.ok) {
       const errText = await geminiResponse.text();
       console.error("Gemini API failure", errText);
-      return NextResponse.json({ message: "Failed to generate roadmap" }, { status: 502 });
+      return NextResponse.json(buildFallbackRoadmap(role));
     }
 
     const data = (await geminiResponse.json()) as {
@@ -92,19 +150,21 @@ export async function POST(request: Request) {
     const jsonMatch = rawText.match(/\{[\s\S]*\}/);
 
     if (!jsonMatch) {
-      return NextResponse.json({ message: "Invalid response format from AI" }, { status: 500 });
+      return NextResponse.json(buildFallbackRoadmap(role));
     }
 
     const parsed = JSON.parse(jsonMatch[0]);
     const roadmap = normalizeRoadmap(parsed, role);
 
     if (!roadmap.stages.length) {
-      return NextResponse.json({ message: "Generated roadmap has no stages" }, { status: 500 });
+      return NextResponse.json(buildFallbackRoadmap(role));
     }
 
     return NextResponse.json(roadmap);
   } catch (error) {
     console.error("Generate roadmap failed", error);
-    return NextResponse.json({ message: "Failed to generate roadmap" }, { status: 500 });
+    const body = await request.json().catch(() => null);
+    const role = typeof body?.role === "string" ? body.role.trim() : "Career";
+    return NextResponse.json(buildFallbackRoadmap(role));
   }
 }

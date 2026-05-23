@@ -154,8 +154,9 @@ body {
   max-width: 800px;
   width: 100%;
   text-align: center;
-  
+  padding: 2rem 1.25rem;
 }
+
 
 .hero-title {
   font-size: 4rem;
@@ -360,6 +361,46 @@ button:focus-visible,
   border: 1px solid var(--card-border);
   box-shadow: var(--shadow-soft);
   backdrop-filter: blur(8px);
+}
+
+/* Inner UI panel (ElevenLabs-like) */
+.inner-ui {
+  border-radius: 14px;
+  padding: 18px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border: 1px solid rgba(255,255,255,0.04);
+  box-shadow: 0 10px 30px rgba(2,6,23,0.35);
+  backdrop-filter: blur(8px) saturate(120%);
+}
+
+.floating-toolbar {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 8px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+  border: 1px solid rgba(255,255,255,0.04);
+  box-shadow: 0 6px 20px rgba(8,18,49,0.35);
+}
+
+.pill-button {
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: var(--btn-gradient);
+  color: white;
+  font-weight: 700;
+  border: none;
+  box-shadow: 0 8px 24px rgba(75, 85, 255, 0.12);
+  cursor: pointer;
+}
+
+.glass-control {
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.03);
+  color: var(--text-primary);
 }
 
 .history-header {

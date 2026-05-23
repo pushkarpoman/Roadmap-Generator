@@ -63,7 +63,8 @@ export default function HistoryContent() {
 
   return (
     <Container maxWidth="md" className="history-container">
-      <Paper className="history-paper">
+      <div className="inner-ui">
+        <Paper className="history-paper">
         <Box className="history-header">
           <Typography variant="h4" component="h1" className="history-title">
             Your Learning Journey
@@ -183,7 +184,8 @@ export default function HistoryContent() {
             ))}
           </Box>
         )}
-      </Paper>
+        </Paper>
+      </div>
     </Container>
   );
 }

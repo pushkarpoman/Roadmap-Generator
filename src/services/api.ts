@@ -1,4 +1,12 @@
-import type { RoadmapContent, RoadmapRecord, UserDTO } from "@/types/roadmap";
+import type {
+  JobGapInsight,
+  QuizQuestion,
+  ResumeBullet,
+  RoadmapContent,
+  RoadmapRecord,
+  Stage,
+  UserDTO,
+} from "@/types/roadmap";
 
 const JSON_HEADERS = { "Content-Type": "application/json" };
 
@@ -79,4 +87,57 @@ export async function getRoadmapHistory() {
   });
 
   return handleResponse<RoadmapRecord[]>(response);
+}
+
+export async function updateRoadmap(id: number, title: string, content: RoadmapContent) {
+  const response = await fetch(`/api/roadmap/${id}`, {
+    method: "PUT",
+    headers: JSON_HEADERS,
+    body: JSON.stringify({ title, content }),
+  });
+
+  return handleResponse<RoadmapRecord>(response);
+}
+
+export async function analyzeRoadmapJobGap(roadmap: RoadmapContent, postingText: string) {
+  const response = await fetch("/api/roadmap/job-gap", {
+    method: "POST",
+    headers: JSON_HEADERS,
+    body: JSON.stringify({ roadmap, postingText }),
+  });
+
+  return handleResponse<JobGapInsight>(response);
+}
+
+export async function generateStageQuiz(stage: Stage, count = 5) {
+  const response = await fetch("/api/roadmap/quiz", {
+    method: "POST",
+    headers: JSON_HEADERS,
+    body: JSON.stringify({ stage, count }),
+  });
+
+  const data = await handleResponse<{ questions: QuizQuestion[] }>(response);
+  return data.questions;
+}
+
+export async function generateResumeBullets(roadmap: RoadmapContent, completedStageIds: number[]) {
+  const response = await fetch("/api/roadmap/bullets", {
+    method: "POST",
+    headers: JSON_HEADERS,
+    body: JSON.stringify({ roadmap, completedStageIds }),
+  });
+
+  const data = await handleResponse<{ bullets: ResumeBullet[] }>(response);
+  return data.bullets;
+}
+
+export async function replanRoadmapWeekly(roadmap: RoadmapContent) {
+  const response = await fetch("/api/roadmap/replan", {
+    method: "POST",
+    headers: JSON_HEADERS,
+    body: JSON.stringify({ roadmap }),
+  });
+
+  const data = await handleResponse<{ roadmap: RoadmapContent }>(response);
+  return data.roadmap;
 }

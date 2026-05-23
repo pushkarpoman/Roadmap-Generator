@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "notify-worker": "node scripts/notify-worker.js"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -18,7 +19,11 @@
     "jsonwebtoken": "^9.0.2",
     "next": "15.3.2",
     "react": "19.0.0",
-    "react-dom": "19.0.0"
+    "react-dom": "19.0.0",
+    "pdf-parse": "^1.1.1",
+    "mammoth": "^1.4.20",
+    "nodemailer": "^6.9.4",
+    "node-cron": "^3.0.2"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",

@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
-import { generateRoadmap, saveRoadmap } from "@/services/api";
+import { generateRoadmap, saveRoadmap, updateRoadmap } from "@/services/api";
 import type { RoadmapContent } from "@/types/roadmap";
 import RoadmapVisualization from "@/components/RoadmapVisualization";
 import { useAppContext } from "@/context/app-context";
@@ -12,7 +12,9 @@ export default function HomeContent() {
   const { user } = useAppContext();
   const inputRef = useRef<HTMLInputElement>(null);
   const [roadmap, setRoadmap] = useState<RoadmapContent | null>(null);
+  const [roadmapId, setRoadmapId] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
+  const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [inputError, setInputError] = useState("");
 
@@ -38,13 +40,15 @@ export default function HomeContent() {
     setLoading(true);
     setError(null);
     setRoadmap(null);
+    setRoadmapId(null);
 
     try {
       const generatedRoadmap = await generateRoadmap(role);
       setRoadmap(generatedRoadmap);
 
       if (user) {
-        await saveRoadmap(role, generatedRoadmap);
+        const saved = await saveRoadmap(role, generatedRoadmap);
+        setRoadmapId(saved.id);
       }
 
       if (typeof window !== 'undefined') {
@@ -58,6 +62,25 @@ export default function HomeContent() {
     }
   };
 
+  const handleRoadmapChange = async (nextRoadmap: RoadmapContent) => {
+    setRoadmap(nextRoadmap);
+
+    if (!user || !roadmapId) {
+      return;
+    }
+
+    setSaving(true);
+    try {
+      const updated = await updateRoadmap(roadmapId, nextRoadmap.title, nextRoadmap);
+      setRoadmapId(updated.id);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Failed to save roadmap updates";
+      setError(message);
+    } finally {
+      setSaving(false);
+    }
+  };
+
   if (roadmap) {
     return (
       <div className="roadmap-section">
@@ -67,11 +90,17 @@ export default function HomeContent() {
           onClick={() => {
             setRoadmap(null);
             setError(null);
+            setRoadmapId(null);
           }}
         >
           Generate Another Roadmap
         </button>
-        <RoadmapVisualization roadmap={roadmap} />
+        {saving && <p className="hero-subtitle">Saving roadmap updates...</p>}
+        <RoadmapVisualization
+          roadmap={roadmap}
+          canPersist={Boolean(user && roadmapId)}
+          onRoadmapChange={handleRoadmapChange}
+        />
       </div>
     );
   }
