@@ -52,14 +52,14 @@ export async function parseResume(buffer: Buffer, mimeType?: string) {
     try {
       if (mimeType === "application/pdf" || mimeType === "application/x-pdf") {
         const pdf = (await import('pdf-parse')).default ?? (await import('pdf-parse'));
-        const data = await pdf(buffer as any);
+        const data = await pdf(buffer as Buffer);
         return data.text || "";
       }
       // assume docx if not pdf
       const mammoth = (await import('mammoth'));
       const result = await mammoth.extractRawText({ buffer });
       return result.value || "";
-    } catch (e) {
+    } catch {
       // fallback to UTF-8 text
       return buffer.toString("utf8");
     }

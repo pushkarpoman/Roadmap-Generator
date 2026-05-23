@@ -2,14 +2,14 @@ import { NextResponse } from "next/server";
 import { getRequestUser } from "@/lib/auth";
 import { listRoadmapsByUserId } from "@/lib/db";
 
-function computeConversionRate(applications: any[]) {
+function computeConversionRate(applications: Array<{ status?: string }>) {
   if (!applications || applications.length === 0) return 0;
   const applied = applications.length;
-  const offers = applications.filter((a: any) => a.status === 'offer').length;
+  const offers = applications.filter((a) => a.status === 'offer').length;
   return Math.round((offers / applied) * 10000) / 100; // percent with 2 decimals
 }
 
-export async function GET(request: Request) {
+export async function GET(_request: Request) {
   try {
     const user = await getRequestUser();
     if (!user) return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
@@ -17,7 +17,7 @@ export async function GET(request: Request) {
     const roadmaps = await listRoadmapsByUserId(user.id);
 
     // aggregate
-    let allApplications: any[] = [];
+    const allApplications: Array<{ status?: string }> = [];
     const weeklyMap: Record<string, number> = {};
     const quizScores: Record<string, { sum: number; count: number }> = {};
     const readinessTrend: Record<string, { sum: number; count: number }> = {};
