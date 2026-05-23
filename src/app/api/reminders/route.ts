@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { getRequestUser } from "@/lib/auth";
 import { createReminder, listRemindersByUserId, deleteReminder } from "@/lib/db";
 
-export async function GET(_request: Request) {
+export async function GET() {
   try {
     const user = await getRequestUser();
     const reminders = await listRemindersByUserId(user?.id);

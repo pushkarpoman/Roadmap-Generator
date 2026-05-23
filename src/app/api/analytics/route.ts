@@ -9,7 +9,7 @@ function computeConversionRate(applications: Array<{ status?: string }>) {
   return Math.round((offers / applied) * 10000) / 100; // percent with 2 decimals
 }
 
-export async function GET(_request: Request) {
+export async function GET() {
   try {
     const user = await getRequestUser();
     if (!user) return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });

@@ -5,7 +5,6 @@ import type {
   DailyPlanTask,
   LearningPreference,
   LearningStreak,
-  MentorMemoryEntry,
   MentorReply,
   MockInterviewQuestion,
   MockInterviewSession,
