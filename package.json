@@ -2,6 +2,9 @@
   "name": "roadmap-generator-next",
   "version": "1.0.0",
   "private": true,
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -17,18 +20,20 @@
     "@neondatabase/serverless": "^0.10.4",
     "bcryptjs": "^3.0.2",
     "jsonwebtoken": "^9.0.2",
-    "next": "15.3.2",
-    "react": "19.0.0",
-    "react-dom": "19.0.0",
-    "pdf-parse": "^1.1.1",
     "mammoth": "^1.4.20",
+    "next": "15.3.2",
+    "node-cron": "^3.0.2",
     "nodemailer": "^6.9.4",
-    "node-cron": "^3.0.2"
+    "pdf-parse": "^1.1.1",
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^22.14.1",
+    "@types/nodemailer": "^8.0.0",
+    "@types/pdf-parse": "^1.1.5",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "eslint": "^9.23.0",
